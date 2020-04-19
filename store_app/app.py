@@ -1,6 +1,6 @@
 import os
 from flask import Flask, render_template
-from store_app.models import db, User
+from store_app.models import db, User, Goods
 
 
 def create_app():
@@ -15,6 +15,10 @@ def create_app():
     @app.route('/users')
     def users():
         return render_template('users.html', user_list=User.query.all())
+
+    @app.route('/goods')
+    def goods():
+        return render_template('goods.html', goods_list=Goods.query.all())
 
     return app
 
