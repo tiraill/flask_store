@@ -12,7 +12,7 @@ def create_app():
 
     @app.route('/')
     def hello_world():
-        return 'Hello World!'
+        return render_template('index.html')
 
     @app.route('/users')
     def users():
