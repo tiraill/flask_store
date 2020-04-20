@@ -8,7 +8,9 @@
         <div class="card w-100" style="width: 18rem;">
             <img src="/static/imgs/{{ good.img_file_name }}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">{{ good.name }}</h5>
+                <h5 class="card-title">
+                    <a href="goods/{{ good.id }}">{{ good.name }}</a>
+                </h5>
                 <p class="card-text">{{ good.description}}</p>
                 <a href="#" class="btn btn-primary">{{ good.price }}</a>
             </div>

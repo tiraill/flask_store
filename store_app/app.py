@@ -1,13 +1,11 @@
 import os
 from flask import Flask, render_template
-from flask_bootstrap import Bootstrap
 from store_app.models import db, User, Goods
 
 
 def create_app():
     """Returns an initialized Flask application."""
     app = Flask(__name__)
-    bootstrap = Bootstrap(app)
     register_extensions(app)
 
     @app.route('/')
@@ -21,6 +19,10 @@ def create_app():
     @app.route('/goods')
     def goods():
         return render_template('goods.html', goods_list=Goods.query.all())
+
+    @app.route('/goods/<int:good_id>')
+    def good(good_id: int):
+        return render_template('good_template.html', good=Goods.query.filter_by(id=good_id).one())
 
     return app
 
