@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import JSON
+
 db = SQLAlchemy()
 
 
@@ -20,3 +22,21 @@ class Goods(db.Model):
 
     def __repr__(self):
         return '<Good %r>' % self.name
+
+class Orders(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
+    status = db.Column(JSON, nullable=False)
+
+    def __repr__(self):
+        return '<Order %r>' % self.id
+
+class Order_detail(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, nullable=False)
+    good_id = db.Column(db.Integer, nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<Order_detail %r>' % self.id
