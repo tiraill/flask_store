@@ -6,7 +6,7 @@ from flask import (
 # from flask_login import current_user, login_required
 
 # from app.models import User, Categories, Products,Kart
-from store_app.models import Goods
+from store_app.models import Products
 # from app.admin.forms import Variations
 # import random
 store = Blueprint('store', __name__)
@@ -19,7 +19,7 @@ def landing():
 
 @store.route('/goods')
 def goods():
-    return render_template('goods.html', goods_list=Goods.query.all())
+    return render_template('goods.html', goods_list=Products.query.all())
 
 
 @store.route('/goods/<int:good_id>', methods=["GET", "POST"])
@@ -39,5 +39,5 @@ def good(good_id: int):
 
     return render_template(
         'good_template.html',
-        good=Goods.query.filter_by(id=good_id).one()
+        good=Products.query.filter_by(id=good_id).one()
     )

@@ -6,8 +6,8 @@ TOP_LEVEL_DIR = os.path.abspath(os.curdir)
 
 
 class Config(object):
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'nifdl>jfdf@md!'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///shop.db'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     # Uploads
     # UPLOADS_DEFAULT_DEST = TOP_LEVEL_DIR + '/app/static/img/products'
