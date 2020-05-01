@@ -4,7 +4,7 @@ from flask import (
     flash, Blueprint
 )
 
-from store_app.models import db, User
+from store_app.models import db, Users
 import gc
 from store_app.auth.forms import RegistrationForm, LoginForm
 from flask_login import (
@@ -30,7 +30,7 @@ def register():
         return redirect(url_for('store.landing'))
     try:
         if form.validate_on_submit():
-            user = User(
+            user = Users(
                 firstname=form.firstname.data,
                 lastname=form.lastname.data,
                 email=form.email.data,
@@ -57,7 +57,7 @@ def login():
             return redirect(url_for('store.landing'))
         if form.validate_on_submit():
 
-            user = User.query.filter_by(email=form.email.data).first()
+            user = Users.query.filter_by(email=form.email.data).first()
             if user is None or not user.check_password(form.password.data):
                 flash('Invalid username or password', 'warning')
                 return redirect(url_for('auth.login', form=form, title="Login to your account"))

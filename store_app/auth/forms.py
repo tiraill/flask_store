@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, validators
 
 from wtforms.validators import ValidationError, DataRequired, Email
 
-from store_app.models import User
+from store_app.models import Users
 
 
 class RegistrationForm(FlaskForm):
@@ -25,12 +25,12 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
     def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
+        user = Users.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Email already in use. ")
 
     def validate_phone(self, phonenumber):
-        user = User.query.filter_by(phonenumber=phonenumber.data).first()
+        user = Users.query.filter_by(phonenumber=phonenumber.data).first()
         if user is not None:
             raise ValidationError("phone number  already in use. ")
 

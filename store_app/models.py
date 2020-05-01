@@ -6,7 +6,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as serializer
 from flask_login import UserMixin
 
 
-class User(db.Model):
+class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(24), index=True)
@@ -18,7 +18,7 @@ class User(db.Model):
 
     # relationships
     # one to many relationships
-    order = db.relationship('Order')
+    order = db.relationship('Orders')
     # one to many relationship
     cart = db.relationship('Cart')
     # one to many relationships
@@ -41,7 +41,7 @@ class User(db.Model):
             user_id = s.loads(token)['user_id']
         except:
             return None
-        return User.query.get(user_id)
+        return Users.query.get(user_id)
 
     def __repr__(self):
         return '<User {}>'.format(self.email)
@@ -49,7 +49,7 @@ class User(db.Model):
 
 @login_manager.user_loader
 def load_user(_id):
-    return User.query.get(int(_id))
+    return Users.query.get(int(_id))
 
 
 class Products(db.Model):
@@ -78,6 +78,7 @@ class Categories(db.Model):
 
     def __repr__(self):
         return '<Category %r>' % self.category_name
+
 
 class Orders(db.Model):
     __tablename__ = 'orders'
