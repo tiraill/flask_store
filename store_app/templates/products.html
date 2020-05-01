@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}Users{% endblock %}
+{% block app_content %}
+<h1>goods</h1>
+<div class="row row-cols-1 row-cols-md-3">
+{% for product in products %}
+    <div class="col mb-4">
+        <div class="card w-100" style="width: 18rem;">
+            <img src="/static/imgs/{{ product.img_file_name }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="product/{{ product.id }}">{{ product.product_name }}</a>
+                </h5>
+                <p class="card-text">{{ product.product_description}}</p>
+                <a href="#" class="btn btn-primary">{{ product.product_price }}</a>
+                <form class="form-inline" method="POST">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.submit(class="btn btn-primary d-block")}}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+{% endblock %}

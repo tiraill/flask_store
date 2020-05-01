@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Users{% endblock %}
+{% block app_content %}
+<h1>{{ product.product_name }}</h1>
+
+<img src="/static/imgs/{{ product.img_file_name }}" class="card-img-top" alt="...">
+<div class="card-body">
+    <p class="card-text">{{ product.product_description}}</p>
+    <a href="#" class="btn btn-primary">{{ product.product_price }}</a>
+    <form class="form-inline" method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.submit(class="btn btn-primary d-block")}}
+        </div>
+    </form>
+</div>
+
+{% endblock %}
