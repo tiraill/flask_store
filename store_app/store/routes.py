@@ -65,16 +65,14 @@ def add_to_cart(product_id, product_price) -> bool:
         return False
 
     if db.session.query(
-            Cart.query.filter_by(
-                user_id=current_user.id,
-                product_id=product_id
-            ).exists()).scalar():
+            Cart.query.filter_by(user_id=current_user.id, product_id=product_id).exists()
+    ).scalar():
         return True
-    else:
-        cart = Cart(user_id=current_user.id, product_id=product_id, quantity=1, subtotal=product_price)
-        db.session.add(cart)
-        db.session.commit()
-        return True
+
+    cart = Cart(user_id=current_user.id, product_id=product_id, quantity=1, subtotal=product_price)
+    db.session.add(cart)
+    db.session.commit()
+    return True
 
 
 def cart_count() -> int:
