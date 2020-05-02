@@ -6,7 +6,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as serializer
 from flask_login import UserMixin
 
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(24), index=True)

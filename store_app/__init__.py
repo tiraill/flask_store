@@ -37,12 +37,12 @@ from store_app import models
 # from store_app.admin.routes import admin
 from store_app.auth.routes import auth
 from store_app.store.routes import store
-# from store_app.users.routes import users
+from store_app.users.routes import users
 
 # app.register_blueprint(admin, url_prefix='/admin')
 app.register_blueprint(auth)
 app.register_blueprint(store)
-# app.register_blueprint(users)
+app.register_blueprint(users)
 
 # @app.errorhandler(403)
 # def forbidden(error):
