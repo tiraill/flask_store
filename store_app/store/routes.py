@@ -7,6 +7,7 @@ from flask_login import current_user, login_required
 
 from store_app.utils import AddToCart
 from store_app.models import Products, Cart
+from sqlalchemy.sql import exists
 # from app.admin.forms import Variations
 # import random
 store = Blueprint('store', __name__)
@@ -63,10 +64,17 @@ def add_to_cart(product_id, product_price) -> bool:
     if current_user.is_anonymous:
         return False
 
-    cart = Cart(user_id=current_user.id, product_id=product_id, quantity=1, subtotal=product_price)
-    db.session.add(cart)
-    db.session.commit()
-    return True
+    if db.session.query(
+            Cart.query.filter_by(
+                user_id=current_user.id,
+                product_id=product_id
+            ).exists()).scalar():
+        return True
+    else:
+        cart = Cart(user_id=current_user.id, product_id=product_id, quantity=1, subtotal=product_price)
+        db.session.add(cart)
+        db.session.commit()
+        return True
 
 
 def cart_count() -> int:
