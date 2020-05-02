@@ -110,11 +110,15 @@ class OrderDetail(db.Model):
 
 class Cart(db.Model):
     __tablename__ = 'cart'
+    __table_args__ = (db.UniqueConstraint('product_id', 'user_id', name='uc_product_x_user'),)
+
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     quantity = db.Column(db.Integer, nullable=False)
     subtotal = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    product = db.relationship('Products')
 
     def __repr__(self):
         return '<Cart %r>' % self.id

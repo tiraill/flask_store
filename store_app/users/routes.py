@@ -4,7 +4,7 @@ from flask import (
     flash, Blueprint
 )
 
-from store_app.models import db, Users
+from store_app.models import db, Users, Cart
 import gc
 from store_app.auth.forms import RegistrationForm, LoginForm
 from flask_login import (
@@ -37,4 +37,7 @@ def cart():
 #         return render_template('users/cart.html', count= count, cartlist= cartlist,
 #                                title = "Cart", form = form, price=price, items_subtotals=items_subtotals)
 #
-    return render_template('users/cart.html')
+    return render_template(
+        'users/cart.html',
+        cartlist=Cart.query.filter_by(user_id=current_user.id).all()
+    )

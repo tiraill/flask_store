@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block title %}Users{% endblock %}
+{% block app_content %}
 
-</body>
-</html>
+{% if current_user.is_authenticated %}
+	<div class="container">
+		<div class="row hide">
+				<div class="col-1"></div>
+				<div class="col-6 col-md-3">
+					<strong>Product</strong>
+				</div>
+				<div class="col-auto left">
+						<strong>Subtotal</strong>
+				</div>
+				<div class="col-auto col-md-3">
+						<strong>Quantity</strong>
+				</div>
+				<div class="col-3 col-md-2">
+						<strong></strong>
+				</div>
+		</div>
+    </div>
+    {% for items in cartlist %}
+		<div class="row">
+			<div class="col-1">
+				<img src="{{ items.product.product_image }}" class="item-img img-responsive"/>
+			</div>
+			<div class="col-6 col-md-3">
+                <h6 class="nomargin">
+                    <p>{{ items.product.product_name }}</p>
+                </h6>
+			</div>
+			<div class="col-auto left">
+                <p>
+                    <span class="iso">₦</span>
+                    <span class="item-total{{items.id}} item-total">{{items.subtotal}}
+                </span></p>
+			</div>
+{#			<div class="col-auto col-md-4">#}
+{#                <form action="{{url_for('users.quantity_update', id=items.id)}}" class="form-inline" style="padding:0;margin:0;">#}
+{#                    <p>#}
+{#                        <input id="minus-btn" type="button" class="minus-btn{{items.id}} btn btn-sm btn-outline-info" value="-">#}
+{#                        <input type="text" name="quantity" class="qty form-control-sm" id="qty{{items.id}}" value="{{items.quantity}}" readonly>#}
+{#                        <input id="plus-btn" type="button" class="plus-btn{{items.id}} 	btn btn-sm btn-outline-info" value="+">#}
+{#                        <span class="times">x</span> <span class="iso">₦</span> <span class="item-price{{items.id}}"> {{ items.product.product_price }}</span>#}
+{#                    </p>#}
+{#                </form>#}
+{#			</div>#}
+{#			<div class="col-3 col-md-2 actions">#}
+{#                <a href="{{ url_for('users.remove_item', id=items.id) }}" class=" btn btn-outline-danger btn-sm">x</a>#}
+{#                <div id="loading{{items.id}}" class="spinner-border spinner-border-sm text-success temp_hidden" role="status">#}
+{#                    <span class="sr-only">Loading...</span>#}
+{#                </div>#}
+{#                <div id="loading_{{items.id}}" class="spinner-grow spinner-grow-sm text-success temp_hidden" role="status">#}
+{#                    <span class="sr-only">Loading...</span>#}
+{#                </div>#}
+{#			</div>#}
+		</div>
+		<div class="line"></div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
