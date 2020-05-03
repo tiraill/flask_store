@@ -78,7 +78,7 @@ def cart():
 #
     return render_template(
         'users/cart.html',
-        count= count,
+        count=count,
         cartlist=cartlist,
         title="Cart",
         form=form,
@@ -87,7 +87,7 @@ def cart():
     )
 
 
-@users.route('/cart/update/<int:id>',methods = ["POST"])
+@users.route('/cart/update/<int:id>', methods=["POST"])
 def quantity_update(id):
     cart_item = Cart.query.get_or_404(id)
     quantity = request.form["quantity"]
@@ -97,7 +97,7 @@ def quantity_update(id):
     items_subtotal = subtotals()
     db.session.commit()
     gc.collect()
-    return jsonify({"result":"success", "item_total":item_total, "subtotal":items_subtotal})
+    return jsonify({"result": "success", "item_total": item_total, "subtotal": items_subtotal})
 
 
 @users.route('/cart/remove/<int:id>', methods=["GET", "POST"])

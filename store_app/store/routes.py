@@ -26,12 +26,8 @@ def products():
     form = AddToCart()
 
     if form.validate_on_submit():
-        if add_to_cart(form.product_id.data, form.product_price.data):
-            flash("{} has been added to cart".format(form.product_name.data))
-            return redirect(url_for('store.products'))
-        else:
-            flash('please login before you can add items to your shopping cart', 'warning')
-            return redirect(url_for('store.products'))
+        add_to_cart(form.product_id.data, form.product_price.data, form.product_name.data)
+        return redirect(url_for('store.products'))
 
     return render_template(
         'products.html',
@@ -45,12 +41,8 @@ def products():
 def product(product_id: int):
     form = AddToCart()
     if form.validate_on_submit():
-        if add_to_cart(form.product_id.data, form.product_price.data):
-            flash("{} has been added to cart".format(form.product_name.data))
-            return redirect(url_for('store.product', product_id=product_id))
-        else:
-            flash('please login before you can add items to your shopping cart', 'warning')
-            return redirect(url_for("store.product", product_id=product_id))
+        add_to_cart(form.product_id.data, form.product_price.data, form.product_name.data)
+        return redirect(url_for("store.product", product_id=product_id))
 
     return render_template(
         'product_template.html',
@@ -60,18 +52,21 @@ def product(product_id: int):
     )
 
 
-def add_to_cart(product_id, product_price) -> bool:
+def add_to_cart(product_id, product_price, product_name) -> bool:
     if current_user.is_anonymous:
+        flash('please login before you can add items to your shopping cart', 'warning')
         return False
 
     if db.session.query(
             Cart.query.filter_by(user_id=current_user.id, product_id=product_id).exists()
     ).scalar():
+        flash("{} already has been added to cart".format(product_name))
         return True
 
     cart = Cart(user_id=current_user.id, product_id=product_id, quantity=1, subtotal=product_price)
     db.session.add(cart)
     db.session.commit()
+    flash("{} has been added to cart".format(product_name))
     return True
 
 
