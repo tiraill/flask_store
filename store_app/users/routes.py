@@ -6,7 +6,7 @@ from flask import (
 
 from store_app.models import db, Users, Cart
 import gc
-from store_app.users.forms import CartForm
+from store_app.users.forms import CartForm, ProfileForm
 from store_app.auth.forms import RegistrationForm, LoginForm
 from flask_login import (
     current_user, login_user, logout_user, login_required
@@ -107,3 +107,24 @@ def remove_item(id):
     db.session.commit()
     gc.collect()
     return redirect(url_for('users.cart'))
+
+
+@users.route('/profile/', methods=["GET", "POST"])
+def profile():
+
+    profile_form = ProfileForm()
+    if profile_form.validate_on_submit():
+        user: Users = Users.query.filter_by(id=current_user.id).one()
+        user.firstname = profile_form.firstname.data
+        user.lastname = profile_form.lastname.data
+        user.email = profile_form.email.data
+        user.phonenumber = profile_form.phonenumber.data
+
+        db.session.commit()
+        gc.collect()
+        flash('shipping information was submitted successfully', 'success')
+        return redirect(url_for('users.profile'))
+    return render_template(
+        'users/profile.html',
+        profile_form=profile_form
+    )
